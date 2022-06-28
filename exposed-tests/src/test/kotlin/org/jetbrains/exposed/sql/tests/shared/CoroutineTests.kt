@@ -37,7 +37,7 @@ class CoroutineTests : DatabaseTestsBase() {
     @Test @RepeatableTest(10)
     fun suspendedTx() {
         withTables(Testing) {
-            val mainJob = GlobalScope.async(singleThreadDispatcher) {
+            val mainJobz = GlobalScope.async(singleThreadDispatcher) {
 
                 val job = launch(singleThreadDispatcher) {
                     newSuspendedTransaction(db = db) {
