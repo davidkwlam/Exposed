@@ -277,24 +277,6 @@ class DDLTests : DatabaseTestsBase() {
         }
     }
 
-    @Test fun testCustomTypeIndex() {
-        val t = object : Table("t1") {
-            val id = integer("id")
-            val name = varchar("name", 255).index(customIndexName = null, isUnique = false, indexType = "HASH")
-
-            override val primaryKey = PrimaryKey(id)
-        }
-
-        withTables(t) {
-            val alter = SchemaUtils.createIndex(t.indices[0])
-            val q = db.identifierManager.quoteString
-            if (currentDialectTest is SQLiteDialect)
-                assertEquals("CREATE INDEX ${"t1_name".inProperCase()} ON ${"t1".inProperCase()} USING HASH ($q${"name".inProperCase()}$q)", alter)
-            else
-                assertEquals("ALTER TABLE ${"t1".inProperCase()} ADD CONSTRAINT ${"t1_name_unique".inProperCase()} UNIQUE ($q${"name".inProperCase()}$q)", alter)
-        }
-    }
-
     @Test fun testMultiColumnIndex() {
         val t = object : Table("t1") {
             val type = varchar("type", 255)

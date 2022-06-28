@@ -915,18 +915,16 @@ open class Table(name: String = "") : ColumnSet(), DdlAware {
      *
      * @param customIndexName Name of the index.
      * @param isUnique Whether the index is unique or not.
-     * @param indexType A custom index type (e.g., "BTREE" or "HASH").
      */
-    fun <T> Column<T>.index(customIndexName: String? = null, isUnique: Boolean = false, indexType: String? = null): Column<T> =
-        apply { table.index(customIndexName, isUnique, this, indexType = indexType) }
+    fun <T> Column<T>.index(customIndexName: String? = null, isUnique: Boolean = false): Column<T> =
+        apply { table.index(customIndexName, isUnique, this) }
 
     /**
      * Creates a unique index composed by this column only.
      *
      * @param customIndexName Name of the index.
-     * @param indexType A custom index type (e.g., "BTREE" or "HASH").
      */
-    fun <T> Column<T>.uniqueIndex(customIndexName: String? = null, indexType: String? = null): Column<T> = index(customIndexName, true, indexType)
+    fun <T> Column<T>.uniqueIndex(customIndexName: String? = null): Column<T> = index(customIndexName, true)
 
     /**
      * Creates a unique index.
